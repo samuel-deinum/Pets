@@ -19,27 +19,19 @@ import android.content.ContentResolver;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-/**
- * API Contract for the Pets app.
- */
+
 public final class PetContract {
 
-    // To prevent someone from accidentally instantiating the contract class,
-    // give it an empty constructor.
+
     private PetContract() {}
 
     public static final String CONTENT_AUTHORITY = "com.example.android.pets";
     public static final Uri BASE_CONTENT_URI = Uri.parse("content://"+CONTENT_AUTHORITY);
     public static final String PATH_PETS = "pets";
-    /**
-     * Inner class that defines constant values for the pets database table.
-     * Each entry in the table represents a single pet.
-     */
     public static final class PetEntry implements BaseColumns {
 
         public static final String PATH_PETS = "pets";
 
-        /** Name of database table for pets */
         public final static String TABLE_NAME = "pets";
 
         public final static Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI,PATH_PETS);
@@ -48,11 +40,6 @@ public final class PetContract {
 
         public static final String CONTENT_ITEM_TYPE = ContentResolver.CURSOR_ITEM_BASE_TYPE + "/" + CONTENT_AUTHORITY + "/" + PATH_PETS;
 
-        /**
-         * Unique ID number for the pet (only for use in the database table).
-         *
-         * Type: INTEGER
-         */
         public final static String _ID = BaseColumns._ID;
         public final static String COLUMN_PET_NAME ="name";
         public final static String COLUMN_PET_BREED = "breed";
@@ -71,9 +58,9 @@ public final class PetContract {
                 return true;
             }
             return false;
-        }//isGenderValid
+        }
 
-    }//PetEntry
+    }
 
-}//PetContract
+}
 

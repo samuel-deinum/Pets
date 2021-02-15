@@ -14,9 +14,6 @@ import static android.R.attr.fingerprintAuthDrawable;
 import static android.R.attr.id;
 import static com.example.android.pets.data.PetContract.CONTENT_AUTHORITY;
 import static com.example.android.pets.data.PetContract.PATH_PETS;
-/**
- * Created by sam on 22/06/2018.
- */
 
 public class PetProvider extends ContentProvider {
 
@@ -37,7 +34,7 @@ public class PetProvider extends ContentProvider {
     public boolean onCreate(){
         mDbHelper = new PetDbHelper(getContext());
         return true;
-    }//onCreate
+    }
 
     @Override
     public Cursor query(Uri uri, String[] projection, String selection, String[] selectionArgs, String sortOrder){
@@ -57,14 +54,14 @@ public class PetProvider extends ContentProvider {
                 cursor = database.query(PetContract.PetEntry.TABLE_NAME, projection, selection, selectionArgs, null, null, sortOrder);
                 break;
             default:
-                throw new IllegalArgumentException("Cannot query unkown URI " + uri);
+                throw new IllegalArgumentException("Cannot query unknown URI " + uri);
         }
 
         cursor.setNotificationUri(getContext().getContentResolver(),uri);
 
 
         return cursor;
-    }// query
+    }
 
     @Override
     public String getType(Uri uri){
@@ -76,8 +73,8 @@ public class PetProvider extends ContentProvider {
                 return PetContract.PetEntry.CONTENT_ITEM_TYPE;
             default:
                 throw new IllegalArgumentException("Unkown uri"+uri);
-        }//switch
-    }//getType
+        }
+    }
 
 
     @Override
@@ -90,7 +87,7 @@ public class PetProvider extends ContentProvider {
             default:
                 throw new IllegalArgumentException("Insertion is not suported for "+uri);
         }
-    }//insert
+    }
 
     private Uri insertPet(Uri uri, ContentValues values){
 
@@ -105,7 +102,7 @@ public class PetProvider extends ContentProvider {
         getContext().getContentResolver().notifyChange(uri,null);
 
         return ContentUris.withAppendedId(uri,id);
-    }//insertPet
+    }
 
 
     @Override
@@ -131,14 +128,12 @@ public class PetProvider extends ContentProvider {
                 return rowsDeletedB;
             default:
                 throw new IllegalArgumentException("Deletion is not supported for " + uri);
-        }//switch
+        }
 
-    }//delete
+    }
 
     @Override
     public int update(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs){
-
-        //Make sure it all makes sense
         isValid(contentValues);
 
         final int match = sUriMatcher.match(uri);
@@ -146,16 +141,13 @@ public class PetProvider extends ContentProvider {
             case PETS:
                 return updatePet(uri, contentValues, selection, selectionArgs);
             case PET_ID:
-                // For the PET_ID code, extract out the ID from the URI,
-                // so we know which row to update. Selection will be "_id=?" and selection
-                // arguments will be a String array containing the actual ID.
                 selection = PetContract.PetEntry._ID + "=?";
                 selectionArgs = new String[] {String.valueOf(ContentUris.parseId(uri))};
                 return updatePet(uri, contentValues, selection, selectionArgs);
             default:
                 throw new IllegalArgumentException("Update is not supported for " +uri);
-        }//Switch
-    }//update
+        }
+    }
 
     private int updatePet(Uri uri, ContentValues contentValues, String selection, String[] selectionArgs){
 
@@ -168,7 +160,7 @@ public class PetProvider extends ContentProvider {
             getContext().getContentResolver().notifyChange(uri, null);
         }
        return rowsUpdated;
-    }//updatePet
+    }
 
     private void isValid(ContentValues values){
 
@@ -194,4 +186,4 @@ public class PetProvider extends ContentProvider {
         }
 
     }
-}//PetProvider
+}

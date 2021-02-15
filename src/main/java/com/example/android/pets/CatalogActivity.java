@@ -39,12 +39,9 @@ import com.example.android.pets.data.PetContract.PetEntry;
 import com.example.android.pets.data.PetCursorAdapter;
 import com.example.android.pets.data.PetDbHelper;
 
-/**
- * Displays list of pets that were entered and stored in the app.
- */
+
 public class CatalogActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
-    /** Database helper that will provide us access to the database */
     private PetDbHelper mDbHelper;
     private static final int PET_LOADER = 0;
     PetCursorAdapter mCursorAdapter;
@@ -63,6 +60,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
                 startActivity(intent);
             }
         });
+
 
 
 
@@ -91,10 +89,7 @@ public class CatalogActivity extends AppCompatActivity implements LoaderManager.
 
         getLoaderManager().initLoader(PET_LOADER, null,this);
 
-
-        // To access our database, we instantiate our subclass of SQLiteOpenHelper
-        // and pass the context, which is the current activity.
-    }//onCreate
+    }
 
     @Override
     protected void onStart() {
